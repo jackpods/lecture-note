@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 /*  1.main 메서드 만들기
     2.HelloToYou 타입의 객체 만들기-> run 메서드 활용
@@ -15,8 +16,11 @@ public class HelloToYou {
     }
 
     public void run() {
+        LayoutManager layout = new FlowLayout();
+
         JFrame frame = new JFrame("Hello to You");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(layout);
         frame.setSize(400,300);
 
         JLabel label = new JLabel("Hello, world!");
