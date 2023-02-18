@@ -15,12 +15,16 @@ import javax.swing.*;
 
 public class HelloWorld {//HelloWorld라는 타입
     public static void main(String[] args){
+        //크기를 찾아준다.
         JFrame frame = new JFrame("Hello, World!");  //JFrame이라는 타입
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400,300);
-        frame.setVisible(true);
 
+        //만들어주고
         JLabel label = new JLabel("Hello");
-        frame.add(label); //아무대나 방치면 화면에 보이지 않는다. 그래서 frame에 추가해준다.
+        frame.add(label); //아무 대나 방치면 화면에 보이지 않는다. 그래서 frame에 추가해준다.
+
+        //보여준다.
+        frame.setVisible(true);
     }
 }
