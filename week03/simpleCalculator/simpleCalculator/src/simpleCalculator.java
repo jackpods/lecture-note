@@ -6,16 +6,27 @@
 *   6.int-> 32bits / long -> 64bits
 *   7.연산:+,-,*,/
 *   8.for 쉽게 쓰기 -> for(타입 변수 : 배열)
+*   9.사용자 시나리오
+*       1)  1을 누르고 3을 누름 -> currentNumber = 13  operator = ""
+*       2)  +를 누름 -> accumulator = 13,  currentNumber = 0,  currentOperator = "+"
+*       3)  7을 누름 -> accumulator = 13,  currentNumber = 7,  currentOperator = "+"
+*       4)  =을 누름 -> accumulator = 20,  currentNumber = 0,  currentOperator =  "="
+*       4')  + 을 누름 -> accumulator = 20,  currentNumber = 0,  currentOperator =  "+"
+*
+*   10.프로그램의 상태
 * */
 import javax.swing.*;
 import java.awt.*;
 
 public class simpleCalculator {
+    //GUI 요소
     private JTextField textField;
     private JPanel panel;
 
+    //프로그램의 핵심 상태
     private long currentNumber = 0;  //
     private long accumulator = 0; // 누른 값이나 결과 등 을 저장하는 곳
+    private String currentOperator = "";
 
     public static void main(String[] args){
         simpleCalculator application = new simpleCalculator();
@@ -77,6 +88,9 @@ public class simpleCalculator {
         for (String operator : operators) {//0~9를 사용하지 않는다.
             JButton button = new JButton(operator);
             button.addActionListener(event ->{
+                currentOperator =  operator;//operator = operator하면 안되기에
+
+
                 //연산자를 누르면 숫자를 다시 새로 입력하게 된다.->여태까지 누른걸 어딘가에 보관해야한다.->누산한다
                 accumulator = currentNumber;
                 currentNumber = 0;
