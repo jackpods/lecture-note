@@ -33,6 +33,7 @@ public class simpleCalculator {
         //7 8 9
         //0
         panel.setLayout(new GridLayout(4,3));
+        frame.add(panel);
 
         for(int i = 0; i<10;i+=1){
             int number = (i+1) % 10;
