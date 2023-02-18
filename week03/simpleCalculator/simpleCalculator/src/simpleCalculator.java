@@ -40,7 +40,7 @@ public class simpleCalculator {
 
         textField = new JTextField(10);
         //맨위에 입력하는 창을 만들지만 입력은  못하게 한다.
-        updateDisplay();//Extract Method를 하면 textfield가 딸려 들어간다.textfiedl가 지역변수이기 ㄱ떄문.
+        displayCurrentNumber();//Extract Method를 하면 textfield가 딸려 들어간다.textfiedl가 지역변수이기 ㄱ떄문.
         textField.setEditable(false);
         //계산기 오른쪽에 0이 나오게
         textField.setHorizontalAlignment(JTextField.RIGHT);
@@ -73,7 +73,7 @@ public class simpleCalculator {
             button.addActionListener(event->{
                 currentNumber *= 10;
                 currentNumber += number;
-                updateDisplay();
+                displayCurrentNumber();
             });
             panel.add(button);
         }
@@ -93,13 +93,18 @@ public class simpleCalculator {
                     accumulator = currentNumber;
                 }
                 currentNumber = 0;
-                updateDisplay(); //계속 0이 나오게 된다.
+                displayAccumulator(); //계속 0이 나오게 된다.
             });
             panel.add(button);
         }
     }
-    public void updateDisplay() {
+
+    public void displayCurrentNumber() {
         textField.setText(Long.toString(currentNumber));  // long으로 바꿔줄 때 원래는 하나하나 다 바꿔줘야하는데  한 곳으로
         //몰아줬기 때문에 한번에 바꿔줄 수 있다=>재사용을 하게되고 관심사 분리.
+    }
+
+    private void displayAccumulator() {
+        textField.setText(Long.toString(accumulator ));
     }
 }
