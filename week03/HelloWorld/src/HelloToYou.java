@@ -24,7 +24,13 @@ public class HelloToYou {
 
         JFrame frame = new JFrame("Hello to You");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(new GridLayout(3,1));//행과 열을 잡을 수 있다.
+        /*
+                column 1 column 2 column 3
+            row1 인사
+            row2 입력 컨트록
+            row3 버
+        * */
         //변수에 있던걸 다시 가져온다. 아래와 같은 방식이다. cmd+option+n
         //ex_   int width = 400;
         //      int height = 300;
