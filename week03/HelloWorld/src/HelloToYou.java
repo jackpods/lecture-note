@@ -15,7 +15,11 @@ import java.awt.*;
         2) 매개 변수(parameters)
         3) 멤버 변수(Instance Field) = 객체와 생명주기를 같이 한다.
                 -> 무조건 private .public을 할 수는 있지만 하지 않는다.
-
+    10.중복발견 ->패턴 발견 -> 중복 제거
+    11.Refactor 도구-> Extract method
+    12. Extract method를 사용하기 전 메서드는 Method : public/private + static/non-static + 반환 타입(return type) + 메서드 이름
+            -> 추상화(abstraction) => 중복 제거/재사용 , 이름 붙일 수 있다. => 메서드 greetingMessage에서 hi라고 바꿔도 전혀 상관없다.
+            -> 관심사의 분리
 * */
 public class HelloToYou {
     private String name="World";
@@ -42,7 +46,7 @@ public class HelloToYou {
         //    frame.setSize(width,height);
 
 
-        JLabel label = new JLabel("Hello, "+name+"!");
+        JLabel label = new JLabel(greetingMessage());
         frame.add(label);
 
         JTextField textField = new JTextField(10);
@@ -54,11 +58,19 @@ public class HelloToYou {
 
 
             name = textField.getText();  // textField에서 글을 가지고 온다 . getText를 얻은다음 setText에 넣는다.
-            label.setText("Hello, " +name +"!");//텍스트를 바꿔주는.원래 label이 가지고 있던 "Hello, world"대신에 다른걸 넣을 수 있다.
+            //String message = greetingMessage();
+            //label.setText(message);  //중복 제거
+            label.setText(greetingMessage());//텍스트를 바꿔주는.원래 label이 가지고 있던 "Hello, world"대신에 다른걸 넣을 수 있다.
         });
         frame.add(button);
 
         frame.pack(); //사이즈 자동조절
         frame.setVisible(true);
     }
+
+    private String greetingMessage() {//void가 없기에 반환을 해줄 수 있다.  String.message = scaner.nextline과 똑같다.
+        return "Hello, " + name + "!";
+    }
+
+
 }
