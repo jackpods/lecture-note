@@ -13,8 +13,13 @@ import java.awt.*;
     9. 변수의 종류ㅣ
         1) 지역 변수
         2) 매개 변수(parameters)
+        3) 멤버 변수(Instance Field) = 객체와 생명주기를 같이 한다.
+                -> 무조건 private .public을 할 수는 있지만 하지 않는다.
+
 * */
 public class HelloToYou {
+    private String name="World";
+
     public static void main(String[] args){
         HelloToYou application =  new HelloToYou();
           application.run();
@@ -35,9 +40,9 @@ public class HelloToYou {
         //ex_   int width = 400;
         //      int height = 300;
         //    frame.setSize(width,height);
-        frame.setSize(400,300);
 
-        JLabel label = new JLabel("Hello, world!");
+
+        JLabel label = new JLabel("Hello, "+name+"!");
         frame.add(label);
 
         JTextField textField = new JTextField(10);
@@ -45,12 +50,15 @@ public class HelloToYou {
 
         JButton button = new JButton("확인");
         button.addActionListener(event ->{
-        //매개변수\
-            String name = textField.getText();  // textField에서 글을 가지고 온다 . getText를 얻은다음 setText에 넣는다.
+        //매개변수이다
+
+
+            name = textField.getText();  // textField에서 글을 가지고 온다 . getText를 얻은다음 setText에 넣는다.
             label.setText("Hello, " +name +"!");//텍스트를 바꿔주는.원래 label이 가지고 있던 "Hello, world"대신에 다른걸 넣을 수 있다.
         });
         frame.add(button);
 
+        frame.pack(); //사이즈 자동조절
         frame.setVisible(true);
     }
 }
