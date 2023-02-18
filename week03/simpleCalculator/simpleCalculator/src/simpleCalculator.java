@@ -12,6 +12,7 @@ import java.awt.*;
 public class simpleCalculator {
     private JTextField textField;
     private long currentNumber = 0;  //
+    private JPanel panel;
 
     public static void main(String[] args){
         simpleCalculator application = new simpleCalculator();
@@ -31,7 +32,7 @@ public class simpleCalculator {
         frame.add(textField, BorderLayout.PAGE_START);//맨 위에만 달라붙.
 
         //레이아웃을 잡아서 별도로 놓고싶다. 밑에 한 부분을 잡아준다.
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         //1 2 3
         //4 5 6
         //7 8 9
@@ -41,6 +42,14 @@ public class simpleCalculator {
 
         //int currentNumber = 0; // 내가 관리하고 있는 번호
 
+        initNumberButtons();
+        initOperatorButtons();
+
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void initNumberButtons() {
         for(int i = 0; i<10;i+=1){
             int number = (i+1) % 10;
             JButton button = new JButton(Integer.toString(number));
@@ -53,14 +62,17 @@ public class simpleCalculator {
             });
             panel.add(button);
         }
-
-        frame.pack();
-        frame.setVisible(true);
     }
 
-    private void updateDisplay() {
+    public void updateDisplay() {
         textField.setText(Long.toString(currentNumber));  // long으로 바꿔줄 때 원래는 하나하나 다 바꿔줘야하는데  한 곳으로
                                                           //몰아줬기 때문에 한번에 바꿔줄 수 있다=>재사용을 하게되고 관심사 분리.
+    }
+    public void initOperatorButtons(){
+        String[] operators = new String[]{"+","-","*","/","="};
 
+        for(int i=0;i<operators.length;i+=1){//0~9를 사용하지 않는다.
+            JButton button = new JButton(operators[i]);
+        }
     }
 }
