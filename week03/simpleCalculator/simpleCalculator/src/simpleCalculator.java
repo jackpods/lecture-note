@@ -3,12 +3,15 @@
 *   3.나머지 구하기 (%) => x % 10 =>0~9사이 수
 *   4.정수를 문자열로 변환:  Integer.toString(숫자)
 *   5.중복 발견 -> 중복 제거 =>메서드로! (Extract Method)
+*   6.int-> 32bits / long -> 64bits
+*   7.연산:+,-,*,/
 * */
 import javax.swing.*;
 import java.awt.*;
 
 public class simpleCalculator {
-    private int currentNumber = 0;  //
+    private JTextField textField;
+    private long currentNumber = 0;  //
 
     public static void main(String[] args){
         simpleCalculator application = new simpleCalculator();
@@ -19,9 +22,9 @@ public class simpleCalculator {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JTextField textField = new JTextField(10);
+        textField = new JTextField(10);
         //맨위에 입력하는 창을 만들지만 입력은  못하게 한다.
-        textField.setText(Integer.toString(currentNumber));//Extract Method를 하면 textfield가 딸려 들어간다.textfiedl가 지역변수이기 ㄱ떄문.
+        updateDisplay();//Extract Method를 하면 textfield가 딸려 들어간다.textfiedl가 지역변수이기 ㄱ떄문.
         textField.setEditable(false);
         //계산기 오른쪽에 0이 나오게
         textField.setHorizontalAlignment(JTextField.RIGHT);
@@ -44,13 +47,20 @@ public class simpleCalculator {
             //숫자-> 문자열 1. ""+string
             //           2. Integer.toString()
             button.addActionListener(event->{
-                currentNumber = number;
-                textField.setText(Integer.toString(currentNumber));
+                currentNumber *= 10;
+                currentNumber += number;
+                updateDisplay();
             });
             panel.add(button);
         }
 
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private void updateDisplay() {
+        textField.setText(Long.toString(currentNumber));  // long으로 바꿔줄 때 원래는 하나하나 다 바꿔줘야하는데  한 곳으로
+                                                          //몰아줬기 때문에 한번에 바꿔줄 수 있다=>재사용을 하게되고 관심사 분리.
+
     }
 }
