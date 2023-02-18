@@ -56,22 +56,12 @@ public class Calculator {
         for(String operator : operators) {
             JButton button = new JButton(operator);
             button.addActionListener(event -> {
-                switch (currentOperator){
-                    case "":
-                        accumulator = currentNumber;
-                        break;
-                    case "+":
-                        accumulator += currentNumber;
-                        break;
-                    case "-":
-                        accumulator -= currentNumber;
-                        break;
-                    case "*":
-                        accumulator *= currentNumber;
-                        break;
-                    case "/":
-                        accumulator /= currentNumber;
-                        break;
+                switch (currentOperator) {
+                    case "" -> accumulator = currentNumber;
+                    case "+" -> accumulator += currentNumber;
+                    case "-" -> accumulator -= currentNumber;
+                    case "*" -> accumulator *= currentNumber;
+                    case "/" -> accumulator /= currentNumber;
                 }
                 currentOperator = operator;
                 currentNumber=0;
