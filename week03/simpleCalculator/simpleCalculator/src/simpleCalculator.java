@@ -85,13 +85,22 @@ public class simpleCalculator {
         for (String operator : operators) {//0~9를 사용하지 않는다.
             JButton button = new JButton(operator);
             button.addActionListener(event ->{
-                currentOperator =  operator;//operator = operator하면 안되기에
-                if(!currentOperator.equals("")){
+                if(currentOperator.equals("+")){
                      accumulator +=currentNumber;
                 }
-                if(currentOperator.equals("")){
-                    accumulator = currentNumber;
+                if(currentOperator.equals("-")){
+                    accumulator -= currentNumber;
                 }
+                if(currentOperator.equals("*")){
+                    accumulator *= currentNumber;
+                }
+                if(currentOperator.equals("/")){
+                    accumulator /= currentNumber;
+                }
+                if(currentOperator.equals("")){
+                    accumulator  = currentNumber;
+                }
+                currentOperator =  operator;//operator = operator하면 안되기에//처리해주고 나서 바꿔줘야하기에
                 currentNumber = 0;
                 displayAccumulator(); //계속 0이 나오게 된다.
             });
