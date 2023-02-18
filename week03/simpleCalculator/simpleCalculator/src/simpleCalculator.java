@@ -14,6 +14,7 @@
 *       4')  + 을 누름 -> accumulator = 20,  currentNumber = 0,  currentOperator =  "+"
 *
 *   10.프로그램의 상태
+*   11.문자열 비교 -> String은 객체  -> ==을 못 쓴다. .equals 사용
 * */
 import javax.swing.*;
 import java.awt.*;
@@ -78,10 +79,6 @@ public class simpleCalculator {
         }
     }
 
-    public void updateDisplay() {
-        textField.setText(Long.toString(currentNumber));  // long으로 바꿔줄 때 원래는 하나하나 다 바꿔줘야하는데  한 곳으로
-                                                          //몰아줬기 때문에 한번에 바꿔줄 수 있다=>재사용을 하게되고 관심사 분리.
-    }
     public void initOperatorButtons(){
         String[] operators = new String[]{"+","-","*","/","="};
 
@@ -89,13 +86,20 @@ public class simpleCalculator {
             JButton button = new JButton(operator);
             button.addActionListener(event ->{
                 currentOperator =  operator;//operator = operator하면 안되기에
-
-
-                //연산자를 누르면 숫자를 다시 새로 입력하게 된다.->여태까지 누른걸 어딘가에 보관해야한다.->누산한다
-                accumulator = currentNumber;
+                if(!currentOperator.equals("")){
+                     accumulator +=currentNumber;
+                }
+                if(currentOperator.equals("")){
+                    accumulator = currentNumber;
+                }
                 currentNumber = 0;
+                updateDisplay(); //계속 0이 나오게 된다.
             });
             panel.add(button);
         }
+    }
+    public void updateDisplay() {
+        textField.setText(Long.toString(currentNumber));  // long으로 바꿔줄 때 원래는 하나하나 다 바꿔줘야하는데  한 곳으로
+        //몰아줬기 때문에 한번에 바꿔줄 수 있다=>재사용을 하게되고 관심사 분리.
     }
 }
