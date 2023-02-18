@@ -10,6 +10,8 @@
   8.메서드로 나누면  어떤 작업을 추상화(abstrraction)한다. ->이름 붙이  ex) int age =3 에서 3이 중요한게 아니라 age가 중요
     알아서 되게 하는
   9.Extract Method -> 메서드로 추출하기  코드들을 run으로 옮기는 행위
+  10.Refactor 도구 활용 => Refactoring(결과가 바뀌지 않고 코드만 코친다.)     Extract Method 의 반대는 Inline Method
+  11.
 * */
 
 import javax.swing.*;
@@ -18,6 +20,10 @@ public class HelloWorld {//HelloWorld라는 타입
     public static void main(String[] args){
         HelloWorld helloWorld = new HelloWorld();
 
+        helloWorld.run();
+    }
+
+    public void run() {
         //크기를 찾아준다.
         JFrame frame = new JFrame("Hello, World!");  //JFrame이라는 타입
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
