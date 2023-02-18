@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class simpleCalculator {
+    private int currentNumber = 0;  //
+
     public static void main(String[] args){
         simpleCalculator application = new simpleCalculator();
         application.run();
@@ -15,12 +17,12 @@ public class simpleCalculator {
     private void run() {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400,600);
+
 
 
         JTextField textField = new JTextField(10);
         //맨위에 입력하는 창을 만들지만 입력은  못하게 한다.
-        textField.setText("0");
+        textField.setText(Integer.toString(currentNumber));
         textField.setEditable(false);
         //계산기 오른쪽에 0이 나오게
         textField.setHorizontalAlignment(JTextField.RIGHT);
@@ -35,15 +37,21 @@ public class simpleCalculator {
         panel.setLayout(new GridLayout(4,3));
         frame.add(panel);
 
+        //int currentNumber = 0; // 내가 관리하고 있는 번호
+
         for(int i = 0; i<10;i+=1){
             int number = (i+1) % 10;
             JButton button = new JButton(Integer.toString(number));
             //숫자-> 문자열 1. ""+string
             //           2. Integer.toString()
+            button.addActionListener(event->{
+                currentNumber = number;
+                textField.setText(Integer.toString(currentNumber));
+            });
             panel.add(button);
         }
 
-
+        frame.pack();
         frame.setVisible(true);
     }
 }
