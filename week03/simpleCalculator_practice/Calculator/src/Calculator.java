@@ -1,16 +1,31 @@
 //12.Method의 parameter(매개변수)를 이용해서 하나의 메서드를 다르게 작동하게 함.
 //  -> 넘겨주는 값은 argument(인자, 인수)라고 부름.
 //최신 switch
+//static -> 사실은 따로 있는 것. 다른 친구들과 같이 쓰려고.
+//static final -> constant(상수) -> 대문자로 표기
+//표기법
+//  - camelCase -> 전부 소문자, 단어 연결부를 대문자로 표기
+//  - snake_case ->전부 소문자, 단어 연결부를 밑줄로 나눔 -> Java에선 안씀
+//  - SCREAMING_SNAKE_CASE -> 전부 대문자, 단어 연결부를 밑줄로 나눔.
+//  - PascalCase -> camelCase의 특수한 형태. 첫 글자가 대문자.
+//                 -> Class 이름에 사용. HelloWorld
 import javax.swing.*;
 import java.awt.*;
 
 public class Calculator {
-    private long currentNumber = 0;
+    //상수
+    private static final String[] OPERATORS = new String[]{"+","-","*","/","="};
+
+    //프로그램의 핵심 상태
     private JTextField textField;
     private JPanel panel;
+
+    //GUI 요소
+    private long currentNumber = 0;
     private long accumulator = 0;
     private String currentOperator = "";
 
+    //Entry point(객체와 무관하게 따로 존재)
     public static void main(String[] args){
         Calculator application = new Calculator();
         application.run();
@@ -24,7 +39,7 @@ public class Calculator {
         textField = new JTextField(10);
         updateDisplay(currentNumber);
         textField.setEditable(false);
-        textField.setHorizontalAlignment(JTextField.RIGHT);
+         textField.setHorizontalAlignment(JTextField.RIGHT);
         frame.add(textField, BorderLayout.PAGE_START);
 
 
@@ -52,8 +67,8 @@ public class Calculator {
     }
 
     private void initOperatorButtons() {
-        String[] operators = new String[]{"+","-","*","/","="};
-        for(String operator : operators) {
+
+        for(String operator : OPERATORS) {
             JButton button = new JButton(operator);
             button.addActionListener(event -> {
                 switch (currentOperator) {
