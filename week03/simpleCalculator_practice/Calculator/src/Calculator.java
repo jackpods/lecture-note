@@ -53,33 +53,25 @@ public class Calculator {
         frame.setVisible(true);
     }
 
-    private void initNumberButtons() {
+    public void initNumberButtons() {
         for(int i=0; i<10;i+=1){
             int number = (i+1)%10;
             JButton button = new JButton(Integer.toString(number));
             button.addActionListener(event ->{
-                currentNumber *= 10;
-                currentNumber += number;
+                addnumber(number);
                 updateDisplay(currentNumber);//인자 인수
             });
             panel.add(button);
         }
     }
 
-    private void initOperatorButtons() {
+    public void initOperatorButtons() {
 
         for(String operator : OPERATORS) {
             JButton button = new JButton(operator);
             button.addActionListener(event -> {
-                switch (currentOperator) {
-                    case "" -> accumulator = currentNumber;
-                    case "+" -> accumulator += currentNumber;
-                    case "-" -> accumulator -= currentNumber;
-                    case "*" -> accumulator *= currentNumber;
-                    case "/" -> accumulator /= currentNumber;
-                }
-                currentOperator = operator;
-                currentNumber=0;
+                calculate();
+                updateOperator(operator);
                 updateDisplay(accumulator);  //accumlator라는게 인자가 돼서 number라는 매개변수로 받아서 사용.
 
             });
@@ -87,8 +79,28 @@ public class Calculator {
         }
     }
 
+    public void calculate( ) {
+        switch (currentOperator) {
+            case "" -> accumulator = currentNumber;
+            case "+" -> accumulator += currentNumber;
+            case "-" -> accumulator -= currentNumber;
+            case "*" -> accumulator *= currentNumber;
+            case "/" -> accumulator /= currentNumber;
+        }
+        currentNumber=0;
+    }
+
+
     //중복되는 값들만 넣어주려고 할 때
     public void updateDisplay(long number){//파라미터 매개변
         textField.setText(Long.toString(number));
+    }
+
+    public void addnumber(int number) {
+        currentNumber *= 10;
+        currentNumber += number;
+    }
+    public void updateOperator(String operator) {
+        currentOperator = operator;
     }
 }
