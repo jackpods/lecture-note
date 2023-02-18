@@ -7,7 +7,7 @@
   5.모호하기에 JFrame(Java/Swing에서 붙여준 이름 +Frame)화면에 보여주는 fram  ->Window 창 뜨는거/ 객체를 만들어서 사용
   6.객체로만 이루어진 것이 아닌 +Primitive Type도 있다.(숫자에 가까운 것들)  Primitive Type(숫자에 가까운 것들)+Object Type(String ,Scanner등)
   7.메서드는 -> public/private(가시성) +static/없거나 (main일 때문 static사용) + 반환 타입(void) + 메서드이름
-  8.메서드로 나누면  어떤 작업을 추상화(abstrraction)한다. ->이름 붙이  ex) int age =3 에서 3이 중요한게 아니라 age가 중요
+  8.run() 같은 메소드를 만드는 것을  어떤 작업을 추상화(abstrraction)한다. ->이름 붙이  ex) int age =3 에서 3이 중요한게 아니라 age가 중요
     알아서 되게 하는
   9.Extract Method -> 메서드로 추출하기  코드들을 run으로 옮기는 행위
   10.Refactor 도구 활용 => Refactoring(결과가 바뀌지 않고 코드만 코친다.)     Extract Method 의 반대는 Inline Method
