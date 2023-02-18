@@ -17,10 +17,7 @@ import javax.swing.*;
 public class HelloWorld {//HelloWorld라는 타입
     public static void main(String[] args){
         HelloWorld helloWorld = new HelloWorld();
-        helloWorld.run();
-    }
 
-    public void run() {
         //크기를 찾아준다.
         JFrame frame = new JFrame("Hello, World!");  //JFrame이라는 타입
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
