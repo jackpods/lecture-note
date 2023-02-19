@@ -45,10 +45,15 @@ public class MakaoBank {
         panel.setLayout(new FlowLayout());//가로로
         frame.add(panel);
 
-        panel.add(new JButton("잔액 조회"));//버튼들이 행동을 해야하니 다시 분리한다.
+        panel.add(createAmountButton());//버튼들이 행동을 해야하니 다시 분리한다.
         panel.add(new JButton("송금"));
         panel.add(new JButton("거래 내역 "));
 
 
+    }
+    private JButton createAmountButton() {
+        JButton button = new JButton("잔액 조회");
+        button.addActionListener(event->{});//addAction을 해줘야하기에 introduce Method를 해준다.
+        return button;  //new는 create와 비슷하기 에 사용한다.
     }
 }
