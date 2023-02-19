@@ -64,6 +64,7 @@ public class MakaoBank {
         JButton button = new JButton("잔액 조회");
         button.addActionListener(event->{
             AmountPanel amountPanel = new AmountPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
+            contentPanel.removeAll();
             contentPanel.add(amountPanel); // 컨텐츠패널에 어마운트 패널을 만들어준다.
                                         //7.
             frame.setVisible(true);
