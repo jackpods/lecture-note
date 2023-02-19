@@ -13,9 +13,13 @@
 * => List(타입)(추상)   구현으로 ArrayList (구현체)(구체_
 * ex) 사람                선생님
 *     사람                학생
+*List<담을 아이템의 타입> 리스트 = new ArrayList<>;
 *  */
+import java.awt.FlowLayout;
 import javax.swing.*;
-import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class MakaoBank {
     private JFrame frame;  //JFrame에서 처리되고 복잡한것들 잊기 위해 필드로 뺀다.
@@ -41,8 +45,11 @@ public class MakaoBank {
         panel.setLayout(new FlowLayout());//가로로
         frame.add(panel);
 
-        JButton button1 = new JButton("잔액 조회");
-        panel.add(button1);
+        List<JButton> buttons = new ArrayList<>();
+
+        JButton button = new JButton("잔액 조회");
+        panel.add(button);
+        buttons.add(button); //버튼에 추가할 수 있다.
 
         JButton button2 = new JButton("송");
         panel.add(button2);
