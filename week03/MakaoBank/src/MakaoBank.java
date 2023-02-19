@@ -59,7 +59,7 @@ public class MakaoBank {
         accounts.add(account);
         account = new Account("456-212-778", 10000);
 
-        frame = new JFrame("Makao Babj");
+        frame = new JFrame("Mako Bank");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,600);
 

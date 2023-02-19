@@ -2,15 +2,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Account {
-    public String number;//통장 번호
+    public final String number;//통장 번호
 
     private long amount ;//잔액
 
-    private List<String> transactions = new ArrayList<>() ;//거래 내역  =부터 생성자에서 만들어줘도됨.
+    private final List<String> transactions = new ArrayList<>() ;//거래 내역  =부터 생성자에서 만들어줘도됨.
 
     //핵심 도메인 객체를 검증!
     public static void main(String[] args){//검증 main들어 가 있는걸 특별하게 써 왔는데 그렇지 않다. account랑 별로 상관없이 동 떨어진 애다. main의 존재를 찾아서 실행한다.
-        Account account = new Account();
+        Account account = new Account("1234-5678",1000);
         System.out.println("Amount: "+account.getAmount());
         //-> 1000 나와야 함.
         account.transfer(100);
