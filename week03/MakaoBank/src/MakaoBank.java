@@ -23,7 +23,7 @@ import javax.swing.*;
 
 public class MakaoBank {
     private JFrame frame;  //JFrame에서 처리되고 복잡한것들 잊기 위해 필드로 뺀다.
-
+    private JPanel contentPanel; // 내용이 보이는 패널
     public static void main(String[] args){
         MakaoBank application = new MakaoBank();
         application.run();
@@ -35,6 +35,7 @@ public class MakaoBank {
         frame.setSize(500,600);
 
         initMenu(); //메뉴를 만들어줌
+        initContentPanel();
 
         frame.setVisible(true);
     }
@@ -43,7 +44,9 @@ public class MakaoBank {
         //버튼을 3개를 만들어줄껀데 패널을 만들어서 가로로 나열
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());//가로로
-        frame.add(panel);
+        frame.add(panel, BorderLayout.PAGE_START);//이러면 나머지 내용들이 밑으로 자동으로 붙는다.
+
+        //밑에 나온느 내용들을 일정한 패널들로 만들어서 관리를 한다.
 
         panel.add(createAmountButton());//버튼들이 행동을 해야하니 다시 분리한다.
         panel.add(createTransferButton());
@@ -54,7 +57,7 @@ public class MakaoBank {
     public JButton createAmountButton() {
         JButton button = new JButton("잔액 조회");
         button.addActionListener(event->{
-
+            //컨텐츠 패널을 바꿔주기
         });//addAction을 해줘야하기에 introduce Method를 해준다.
         return button;  //new는 create와 비슷하기 에 사용한다.
     }
@@ -62,6 +65,7 @@ public class MakaoBank {
     public JButton createTransferButton() {
         JButton button = new JButton("송금");
         button.addActionListener(event->{
+            //컨텐츠 패널 내용을 바꿔주기
         });
         return button;
     }
@@ -69,7 +73,14 @@ public class MakaoBank {
     public JButton createTransactionsButton() {
         JButton button = new JButton("거레 내역");
         button.addActionListener(event->{
+            //컨텐츠 패널 내용을 바꿔주기
         });
         return button;
+    }
+
+    private void initContentPanel() {
+        contentPanel = new JPanel();
+        frame.add(contentPanel);
+        //이제부터 각각 컨텐츠 패널 내용을 바꿔주기
     }
 }
