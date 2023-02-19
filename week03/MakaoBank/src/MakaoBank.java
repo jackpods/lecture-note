@@ -15,7 +15,13 @@
      사람                학생
     *List<담을 아이템의 타입> 리스트 = new ArrayList<>;
  6. 실제로 내용이 보이는 Content 변경 -> 3가지가 준비되고, 버튼 누르면 바꿔서 보여줌
-* *  */
+ 7.우리만의 Panel -> 실제로도 JPanel과 같은 것이길 바람.
+                -> JPanel이란 타입이길 바라는거랑 같은 말이다.
+   타입(추상) 범용) -> 구현(구체)(상세하다)(덧붙임) (확장 = extends = 상속)
+   extends해서 나만의 패널을 만든다.
+ 8. 생성자(new 하면 실행되는 메서드)
+
+*  */
 
 
 import java.awt.*;
@@ -57,7 +63,9 @@ public class MakaoBank {
     public JButton createAmountButton() {
         JButton button = new JButton("잔액 조회");
         button.addActionListener(event->{
-            //컨텐츠 패널을 바꿔주기
+            AmountPanel amountPanel = new AmountPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
+            contentPanel.add(amountPanel); // 컨텐츠패널에 어마운트 패널을 만들어준다.
+                                        //7.
         });//addAction을 해줘야하기에 introduce Method를 해준다.
         return button;  //new는 create와 비슷하기 에 사용한다.
     }
