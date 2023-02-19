@@ -96,8 +96,8 @@ public class MakaoBank {
     public void showContentPanel(JPanel panel) {
         contentPanel.removeAll();
         contentPanel.add(panel);
-        //7.
-        //특정한 패널을 보여주게 만든다.
+        contentPanel.setVisible(false);
+        contentPanel.setVisible(true);
         frame.setVisible(true);
     }
 }
