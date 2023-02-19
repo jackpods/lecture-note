@@ -52,7 +52,8 @@ public class MakaoBank {
     }
 
     private void run() {
-        account = new Account();  //프로그램시작할 때 만든다.
+        account = new Account("123-456-778", 1000);  //프로그램시작할 때 만든다.
+        account = new Account("456-212-778", 10000);
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,600);

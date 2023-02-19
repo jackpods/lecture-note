@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Account {
-    public String number = "123-456-778";//통장 번호
+    public String number;//통장 번호
 
-    private long amount = 1000;//잔액
+    private long amount ;//잔액
 
     private List<String> transactions = new ArrayList<>() ;//거래 내역  =부터 생성자에서 만들어줘도됨.
 
@@ -25,6 +25,11 @@ public class Account {
             System.out.println(transaction);
         }
         //-> 송금 100, 50 이렇게 나와야 함.
+    }
+
+    public Account(String number, long amount) {//컨트롤 엔터 눌러서 만들어서 한명 더 만들기
+        this.number = number;
+        this.amount = amount;
     }
 
     public String getNumber(){
