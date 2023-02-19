@@ -40,6 +40,8 @@
 
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 public class MakaoBank {
@@ -52,9 +54,12 @@ public class MakaoBank {
     }
 
     private void run() {
+        List<Account> accounts = new ArrayList<>();
         account = new Account("123-456-778", 1000);  //프로그램시작할 때 만든다.
+        accounts.add(account);
         account = new Account("456-212-778", 10000);
-        frame = new JFrame();
+
+        frame = new JFrame("Makao Babj");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,600);
 
