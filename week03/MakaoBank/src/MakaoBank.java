@@ -63,11 +63,8 @@ public class MakaoBank {
     public JButton createAmountButton() {
         JButton button = new JButton("잔액 조회");
         button.addActionListener(event->{
-            AmountPanel amountPanel = new AmountPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
-            contentPanel.removeAll();
-            contentPanel.add(amountPanel); // 컨텐츠패널에 어마운트 패널을 만들어준다.
-                                        //7.
-            frame.setVisible(true);
+            JPanel amountPanel = new AmountPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
+            showContentPanel(amountPanel);
         });//addAction을 해줘야하기에 introduce Method를 해준다.
         return button;  //new는 create와 비슷하기 에 사용한다.
     }
@@ -75,7 +72,8 @@ public class MakaoBank {
     public JButton createTransferButton() {
         JButton button = new JButton("송금");
         button.addActionListener(event->{
-            //컨텐츠 패널 내용을 바꿔주기
+            JPanel transferPanel = new TransferPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
+            showContentPanel(transferPanel);
         });
         return button;
     }
@@ -83,7 +81,8 @@ public class MakaoBank {
     public JButton createTransactionsButton() {
         JButton button = new JButton("거레 내역");
         button.addActionListener(event->{
-            //컨텐츠 패널 내용을 바꿔주기
+            JPanel transactionsPanel = new TransactionsPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
+            showContentPanel(transactionsPanel);
         });
         return button;
     }
@@ -92,5 +91,13 @@ public class MakaoBank {
         contentPanel = new JPanel();
         frame.add(contentPanel);
         //이제부터 각각 컨텐츠 패널 내용을 바꿔주기
+    }
+
+    public void showContentPanel(JPanel panel) {
+        contentPanel.removeAll();
+        contentPanel.add(panel);
+        //7.
+        //특정한 패널을 보여주게 만든다.
+        frame.setVisible(true);
     }
 }
