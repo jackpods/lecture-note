@@ -32,7 +32,7 @@ public class Account {
         amount -= transferAmount;
 
         //거래내력을 기록해줌. Transfer에서 할 필요 없음
-        transactions.add("돈 보냈다~");  //이대로면 transactions가 지역변수라 실행하고나면 끝이다 그러니 필드로 보내야한다.
+        transactions.add("송금: "+transferAmount+"원");  //이대로면 transactions가 지역변수라 실행하고나면 끝이다 그러니 필드로 보내야한다.
     }
 
 }
