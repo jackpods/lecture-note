@@ -11,7 +11,7 @@ public class TransactionsPanel extends JPanel {
         List<String> transactions = account.getTransactions();
         transactions.add("해킹");
 
-        for(String transaction : account.getTransactions()){
+        for(String transaction : account.transactions()){
             this.add(new JLabel(transaction));
         }
     }
