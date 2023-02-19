@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-
+//a
 public class Account {
     public final String number;//통장 번호
 
