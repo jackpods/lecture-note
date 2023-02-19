@@ -20,7 +20,11 @@
    타입(추상) 범용) -> 구현(구체)(상세하다)(덧붙임) (확장 = extends = 상속)
    extends해서 나만의 패널을 만든다.
  8. 생성자(new 하면 실행되는 메서드)
-
+    -> 생성자도 그냥 특별한 메서드에 불과하다. 반환(return)이 없다.
+    -> 생성자도 parameters를 지정할 수 있다.
+    -> 의존하는 객체를 받아서 쓸 수 있다. => 의존성 주입(Dependency Injection)    내가 다른걸 쓰면 걔한테 의존한다.
+                                 => 제어의 역(IoC)
+                                 => 관심사이의 분리
 *  */
 
 
@@ -28,6 +32,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class MakaoBank {
+    private Account account;
     private JFrame frame;  //JFrame에서 처리되고 복잡한것들 잊기 위해 필드로 뺀다.
     private JPanel contentPanel; // 내용이 보이는 패널
     public static void main(String[] args){
@@ -36,6 +41,7 @@ public class MakaoBank {
     }
 
     private void run() {
+        account = new Account();  //프로그램시작할 때 만든다.
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,600);
@@ -63,7 +69,7 @@ public class MakaoBank {
     public JButton createAmountButton() {
         JButton button = new JButton("잔액 조회");
         button.addActionListener(event->{
-            JPanel amountPanel = new AmountPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
+            JPanel amountPanel = new AmountPanel(account);//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
             showContentPanel(amountPanel);
         });//addAction을 해줘야하기에 introduce Method를 해준다.
         return button;  //new는 create와 비슷하기 에 사용한다.
@@ -72,7 +78,7 @@ public class MakaoBank {
     public JButton createTransferButton() {
         JButton button = new JButton("송금");
         button.addActionListener(event->{
-            JPanel transferPanel = new TransferPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
+            JPanel transferPanel = new TransferPanel(account);//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
             showContentPanel(transferPanel);
         });
         return button;

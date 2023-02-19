@@ -2,8 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TransferPanel extends JPanel {
-    TransferPanel(){  //같은 이름 써주면 생성자가 된다.
-        Account account =  new Account();  // 돈이 빠져나가는걸 만들어야하기 떄문에
+    TransferPanel(Account account){  //같은 이름 써주면 생성자가 된다.
         setLayout(new GridLayout(3,1));
 
         JLabel label = new JLabel("송금 하기");
