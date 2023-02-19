@@ -66,6 +66,7 @@ public class MakaoBank {
             AmountPanel amountPanel = new AmountPanel();//이제 어마운트 패널에 뭔가 내용을 만들어줘야한다. 객체를 그냥 add를 할 수 있는ㄷ?
             contentPanel.add(amountPanel); // 컨텐츠패널에 어마운트 패널을 만들어준다.
                                         //7.
+            frame.setVisible(true);
         });//addAction을 해줘야하기에 introduce Method를 해준다.
         return button;  //new는 create와 비슷하기 에 사용한다.
     }
