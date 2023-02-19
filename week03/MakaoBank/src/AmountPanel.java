@@ -7,7 +7,7 @@ public class AmountPanel extends JPanel {
     AmountPanel(Account account){ // 생성자도 그냥 특별한 메서드에 불과하다. 반환(return)이 없다.;
         this.account = account;
 
-        setLayout(new GridLayout(2,1));  // 두 줄로 바뀜
+        this.setLayout(new GridLayout(2,1));  // 두 줄로 바꿈  this. 붙여도 되고 안붙여도 됨
 
         //AmountPanel은 잔액을 보여주는데 잔액쪽 어디가에서 오는데 그걸 Account페이지에서 가져온다.
         this.add(new JLabel(accountNumber()));
