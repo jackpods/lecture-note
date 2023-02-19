@@ -17,9 +17,19 @@ public class Account {
         return amount;
     }
 
-    public void transfer(long transferamount) {
+    //getter;
+    public List<String> getTransactions() {
+        return transactions;
+    }
+
+    //변형 getter! -> 이런 형태를 권장함.
+    public int transactionsSize() {
+        return transactions.size();
+    }
+
+    public void transfer(long transferAmount) {
         //돈이 빠져나감.
-        amount -= transferamount;
+        amount -= transferAmount;
 
         //거래내력을 기록해줌. Transfer에서 할 필요 없음
         transactions.add("돈 보냈다~");  //이대로면 transactions가 지역변수라 실행하고나면 끝이다 그러니 필드로 보내야한다.
