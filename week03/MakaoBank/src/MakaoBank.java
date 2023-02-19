@@ -45,16 +45,10 @@ public class MakaoBank {
         panel.setLayout(new FlowLayout());//가로로
         frame.add(panel);
 
-        List<JButton> buttons = new ArrayList<>();
+        panel.add(new JButton("잔액 조회"));//버튼들이 행동을 해야하니 다시 분리한다.
+        panel.add(new JButton("송금"));
+        panel.add(new JButton("거래 내역 "));
 
-        JButton button = new JButton("잔액 조회");
-        panel.add(button);
-        buttons.add(button); //버튼에 추가할 수 있다.
 
-        JButton button2 = new JButton("송");
-        panel.add(button2);
-
-        JButton button3 = new JButton("거래 내역");
-        panel.add(button3);
     }
 }
