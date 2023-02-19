@@ -8,7 +8,7 @@ public class TransactionsPanel extends JPanel {
 
         this.add(new JLabel("거래 내역"));
 
-        List<String> transactions = account.getTransactions();
+        List<String> transactions = account.transactions();
         transactions.add("해킹");
 
         for(String transaction : account.transactions()){
