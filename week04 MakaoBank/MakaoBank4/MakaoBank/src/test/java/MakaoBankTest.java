@@ -14,9 +14,9 @@ class MakaoBankTest {
 
         assertNotNull(transactions);
 
-//        Transaction transaction = transactions.get(0);
+        Transaction transaction = transactions.get(0);
 
-//        assertEquals("잔액:1000",transaction); 이럴 수는 없으니 이게 되려면 Transaction을 제대로 만들어야겠다.
+        assertEquals(new Transaction("잔액",1000),transaction); //이럴 수는 없으니 이게 되려면 Transaction을 제대로 만들어야겠다.
     }
 
 }
