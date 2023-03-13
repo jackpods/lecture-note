@@ -22,7 +22,7 @@ public class MakaoBank {
         //준비
         Account account = new Account(); //account 준비
         //입력
-        List<Transaction> transactions = loadTransactions(account); //transaction 불러옴
+        List<Transaction> transactions = loadTransactions(); //transaction 불러옴
         //처리
 //        계좌모델,거래모델
 //        List<TransactionResult>transactionResult = account.process(transactions); 내역 적용해서 구한다
@@ -30,7 +30,7 @@ public class MakaoBank {
 //        saveTransactionResults(transactionResults); 저장
     }
 
-    public List<Transaction> loadTransactions(Account account) {
+    public List<Transaction> loadTransactions() {
         return null;
     }
 }
