@@ -31,7 +31,7 @@ public class MakaoBank {
     }
 
     public List<Transaction> loadTransactions() {
-        //asda
+        //
         return null;
     }
 }
