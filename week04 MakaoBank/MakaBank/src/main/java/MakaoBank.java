@@ -31,7 +31,7 @@ public class MakaoBank {
     }
 
     public List<Transaction> loadTransactions() {
-        //////마자?
+        //////아냐?
         return null;
     }
 }
