@@ -26,6 +26,9 @@
 
     6.정확히는 httpExchange 인데 exchange 로만 사용 => 요청을 받거나, 응답을 하는 용도로 사용.
 
+    7. HTTP Response(응답)을 하는데 두 가지를 챙겨야한다. -> Header + Body
+        -Header -> 전체 content (bytes) size
+        -Body   -> content (bytes)
  */
 
 import com.sun.net.httpserver.HttpContext;
