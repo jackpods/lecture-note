@@ -46,7 +46,7 @@
 
     12.요청 URI를 얻어온다 -> 그 중 Path를 얻는다. => 이름 추출
 
-    13.3단계 구성 : 입력 처리 출
+    13.3단계 구성 : 입력 처리 출력
  */
 
 import com.sun.net.httpserver.HttpContext;
@@ -76,14 +76,7 @@ public class MakaoBank {
         httpServer.createContext("/", (exchange) -> {
 //            1. 입력
 
-            URI requestURI = exchange.getRequestURI();//변수를 만들고 URI의 paht를 얻어온다.
-            String path = requestURI.getPath();
-            System.out.println(path);
-
-//             path 를 name 으로 잡으면 안될까?
-
-
-            String name = path.substring(1); //  '/'가 함께 나오니 /를 빼주는 작업을 한다. (1부터 끝까지 얻는다)
+            String name = nameFromPath(exchange);
 
 //            2. 처리
             MessageGenerator messageGenerator = new MessageGenerator(name);
@@ -98,6 +91,18 @@ public class MakaoBank {
 
         });
 
+    }
+
+    private static String nameFromPath(HttpExchange exchange) {
+        URI requestURI = exchange.getRequestURI();//변수를 만들고 URI의 paht를 얻어온다.
+        String path = requestURI.getPath();
+
+
+//             path 를 name 으로 잡으면 안될까?
+
+
+        String name = path.substring(1); //  '/'가 함께 나오니 /를 빼주는 작업을 한다. (1부터 끝까지 얻는다)
+        return name;
     }
 }
 //주소가 다를 때 반복?
