@@ -33,12 +33,12 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executor;
 
 public class MakaoBank {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         MakaoBank application = new MakaoBank();
         application.run();
     }
 
-    private void run() {
+    private void run() throws IOException {
 //         2. 기본으로 제공해주는 것이 있다.
         InetSocketAddress address = new InetSocketAddress(8000);
 
