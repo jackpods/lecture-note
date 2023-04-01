@@ -74,6 +74,19 @@ public class MakaoBank {
             outputStream.close();
         });
 
+        httpServer.createContext("/ashal", (exchange) -> {
+            String content = "Hello, ashal!"; //1. content -> 어떤 내용을 보내줄거야
+
+            exchange.sendResponseHeaders(200,content.getBytes().length); //첫 번째 매개변수는 rCode(response code) -> 여러가지 의미가 있다.
+            //두 번째 매개변수는 responseLength -> byte 사이즈를 말한다.
+
+            OutputStream outputStream = exchange.getResponseBody();
+            outputStream.write(content.getBytes());
+            outputStream.flush();
+
+            outputStream.close();
+        });
+
 
 //      사용자가 웹브라우저에 접속했더니 서버에 뭔가가 일어나는구나를 알고싶은게 목적이 아닌 사용자가 hello world를 보게하는게 목적이기 때문에
 //      1.'hello world를 extract한다.
