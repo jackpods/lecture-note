@@ -10,6 +10,17 @@
               ->sun.com 이란 도메인을 뒤집은 형태.
         ->ex) ahastudio.com -> 패키지 이름으로는 com.ahastudiio.makao.bank
 
+    4.URL -> URI 과거불림/요즘불림
+      http://localhost:8080/home  ->http
+      프로토콜(protocol) + 호스트(host) + 포트(port) +경로(path)
+     =>  http/https => local은 http를 사용 보안은 https를 사용,
+
+         localhost 는 내 컴퓨터를 의미
+
+         각 각의 프로그램을 구분하기 위해 포트를 사용
+
+         프로토콜(protocol) + 호스트(host) + 포트(port) + 경로(path)
+
  */
 
 import com.sun.net.httpserver.HttpContext;
@@ -28,56 +39,6 @@ public class MakaoBank {
 
     private void run() {
 //         2. 기본으로 제공해주는 것이 있다.
-        HttpServer httpServer = new HttpServer() {
-            @Override
-            public void bind(InetSocketAddress addr, int backlog) throws IOException {
-
-            }
-
-            @Override
-            public void start() {
-
-            }
-
-            @Override
-            public void setExecutor(Executor executor) {
-
-            }
-
-            @Override
-            public Executor getExecutor() {
-                return null;
-            }
-
-            @Override
-            public void stop(int delay) {
-
-            }
-
-            @Override
-            public HttpContext createContext(String path, HttpHandler handler) {
-                return null;
-            }
-
-            @Override
-            public HttpContext createContext(String path) {
-                return null;
-            }
-
-            @Override
-            public void removeContext(String path) throws IllegalArgumentException {
-
-            }
-
-            @Override
-            public void removeContext(HttpContext context) {
-
-            }
-
-            @Override
-            public InetSocketAddress getAddress() {
-                return null;
-            }
-        }
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8000),0);//(port)
     }
 }
