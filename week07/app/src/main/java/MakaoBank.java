@@ -32,7 +32,6 @@
 
     8.HTTP 응답 코드  ->
     - 200번대 => 200 (성공), 202 (잘 만들었다)
-
     - 300번대 => 어떤 특정페이로 접근했는데 다른데로 옮기는 것 => 리다이렉션.
     - 400번대 => 클라이언트 잘못. -> 404 (not found) -> path 오류
     - 500번대 => 서버 잘못. 500(서버에서 큰 일 났다.) -> internal error
@@ -46,9 +45,11 @@
  */
 
 import com.sun.net.httpserver.HttpContext;
+import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import utils.MessageGenerator;
+import utils.MessageWriter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -74,14 +75,9 @@ public class MakaoBank {
             String content = messageGenerator.text(); //messageGenerator 에서 텍스트를 얻는다.
 
 //            내용을 전달
+            MessageWriter messageWriter = new MessageWriter(exchange);
+            messageWriter.write(content);
 
-            exchange.sendResponseHeaders(200,content.getBytes().length);
-
-            OutputStream outputStream = exchange.getResponseBody();
-            outputStream.write(content.getBytes());
-            outputStream.flush();
-
-            outputStream.close();
         });
 
         httpServer.createContext("/ashal", (exchange) -> {
@@ -89,14 +85,9 @@ public class MakaoBank {
 
             String content = messageGenerator.text();
 
-            exchange.sendResponseHeaders(200,content.getBytes().length);
+            MessageWriter messageWriter = new MessageWriter(exchange);//exchange 근본적으로 바뀌는 내용이 아닌거 같다. 그렇기 때문에 기본으로 받는게 좋겠다.TODO-질문
+            messageWriter.write(content);
 
-
-            OutputStream outputStream = exchange.getResponseBody();
-            outputStream.write(content.getBytes());
-            outputStream.flush();
-
-            outputStream.close();
         });
 
         httpServer.start();
