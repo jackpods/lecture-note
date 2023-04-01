@@ -26,7 +26,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'server.App'
+    mainClass = 'server.MakaoBank'
 }
 
 tasks.named('test') {

@@ -26,9 +26,16 @@
 
     6.정확히는 httpExchange 인데 exchange 로만 사용 => 요청을 받거나, 응답을 하는 용도로 사용.
 
-    7. HTTP Response(응답)을 하는데 두 가지를 챙겨야한다. -> Header + Body
+    7.HTTP Response(응답)을 하는데 두 가지를 챙겨야한다. -> Header + Body
         -Header -> 전체 content (bytes) size
         -Body   -> content (bytes)
+
+    8.HTTP 응답 코드  ->
+    - 200번대 => 200 (성공), 202 (잘 만들었다)
+
+    - 300번대 => 어떤 특정페이로 접근했는데 다른데로 옮기는 것 => 리다이렉션.
+    - 400번대 => 클라이언트 잘못. -> 404 (not found) -> path 오류
+    - 500번대 => 서버 잘못. 500(서버에서 큰 일 났다.) -> internal error
  */
 
 import com.sun.net.httpserver.HttpContext;
@@ -57,12 +64,14 @@ public class MakaoBank {
         httpServer.createContext("/", (exchange) -> {
             String content = "Hello, world!"; //1. content -> 어떤 내용을 보내줄거야
 
-            OutputStream outputStream = exchange.getResponseBody();//2. 사용자들에게 어떤걸 전달해줄 수 있는 stream 을 받게 된다.
+            exchange.sendResponseHeaders(200,content.getBytes().length); //첫 번째 매개변수는 rCode(response code) -> 여러가지 의미가 있다.
+                                            //두 번째 매개변수는 responseLength -> byte 사이즈를 말한다.
 
-            outputStream.write(content.getBytes()); //바이트로 다뤄야지 사용이 가능하다.
-            outputStream.flush(); //데이터를 한꺼번에 막 전달하는게 아닌 모아놨다가 flush 라는 작업을 통해 한꺼번에 내보낸다.
-                                  //write 을 여러번 하더라도 flush 할 때만 보낼 수 있게 만들었다.
-            outputStream.close(); //응답이 끝나면 클로우즈한다.
+            OutputStream outputStream = exchange.getResponseBody();
+            outputStream.write(content.getBytes());
+            outputStream.flush();
+
+            outputStream.close();
         });
 
 
