@@ -36,11 +36,19 @@
     - 300번대 => 어떤 특정페이로 접근했는데 다른데로 옮기는 것 => 리다이렉션.
     - 400번대 => 클라이언트 잘못. -> 404 (not found) -> path 오류
     - 500번대 => 서버 잘못. 500(서버에서 큰 일 났다.) -> internal error
+
+    9.중복을 발견 -> 중복을 제거 -> 클래스라는 걸 이용(관심사를 분리)
+
+    인사말 만들기와 내용을 전달하기를 구분한다.
+    10.MessageGenerator -> 적절한 인사말 만들기
+        -> 처리 완료 ! generator를 바꿔주기만 하면 여기쪽을 손대지 않고도 인사말들을 얼마든지 변경이 가능하다
+    11.MessageWriter -> 메시지를 HTTP로 전달
  */
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import utils.MessageGenerator;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -54,18 +62,20 @@ public class MakaoBank {
     }
 
     private void run() throws IOException {
-//         2. 기본으로 제공해주는 것이 있다.
         InetSocketAddress address = new InetSocketAddress(8000);
 
-        HttpServer httpServer = HttpServer.create(address, 0);//(port)
-        // 서버를 만들려고 할 때 포트를 중복으로 사용할 수가 없다. 어떤 경우에는 서버를 띄울 수가 없다.
-        // 그렇기에 실패하면 실패한다고 예외가 발생한다.
+        HttpServer httpServer = HttpServer.create(address, 0);
+
 
         httpServer.createContext("/", (exchange) -> {
-            String content = "Hello, world!"; //1. content -> 어떤 내용을 보내줄거야
+            MessageGenerator messageGenerator = new  MessageGenerator();
 
-            exchange.sendResponseHeaders(200,content.getBytes().length); //첫 번째 매개변수는 rCode(response code) -> 여러가지 의미가 있다.
-                                            //두 번째 매개변수는 responseLength -> byte 사이즈를 말한다.
+//            인사말 만들
+            String content = messageGenerator.text(); //messageGenerator 에서 텍스트를 얻는다.
+
+//            내용을 전달
+
+            exchange.sendResponseHeaders(200,content.getBytes().length);
 
             OutputStream outputStream = exchange.getResponseBody();
             outputStream.write(content.getBytes());
@@ -75,10 +85,12 @@ public class MakaoBank {
         });
 
         httpServer.createContext("/ashal", (exchange) -> {
-            String content = "Hello, ashal!"; //1. content -> 어떤 내용을 보내줄거야
+            MessageGenerator messageGenerator = new MessageGenerator("Asahal");
 
-            exchange.sendResponseHeaders(200,content.getBytes().length); //첫 번째 매개변수는 rCode(response code) -> 여러가지 의미가 있다.
-            //두 번째 매개변수는 responseLength -> byte 사이즈를 말한다.
+            String content = messageGenerator.text();
+
+            exchange.sendResponseHeaders(200,content.getBytes().length);
+
 
             OutputStream outputStream = exchange.getResponseBody();
             outputStream.write(content.getBytes());
@@ -87,10 +99,6 @@ public class MakaoBank {
             outputStream.close();
         });
 
-
-//      사용자가 웹브라우저에 접속했더니 서버에 뭔가가 일어나는구나를 알고싶은게 목적이 아닌 사용자가 hello world를 보게하는게 목적이기 때문에
-//      1.'hello world를 extract한다.
-//      2.exchage는 우리가 받거나 주거나 둘 다 할 수 있다.
         httpServer.start();
     }
 }
