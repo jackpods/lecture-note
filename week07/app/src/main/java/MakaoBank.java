@@ -47,20 +47,17 @@
     12.요청 URI를 얻어온다 -> 그 중 Path를 얻는다. => 이름 추출
 
     13.3단계 구성 : 입력 처리 출력
+
+    14.가장 중요한 부분이 어디인지 식별, 분리 -> 3단계 구성 중 "처리"에 해당.
  */
 
-import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import utils.MessageGenerator;
 import utils.MessageWriter;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
-import java.util.concurrent.Executor;
 
 public class MakaoBank {
     public static void main(String[] args) throws IOException {
@@ -76,7 +73,16 @@ public class MakaoBank {
         httpServer.createContext("/", (exchange) -> {
 //            1. 입력
 
-            String name = nameFromPath(exchange);
+
+            URI requestURI = exchange.getRequestURI();//변수를 만들고 URI의 paht를 얻어온다.
+            String path = requestURI.getPath();
+
+
+//             path 를 name 으로 잡으면 안될까?
+
+
+            String name = path.substring(1); //  '/'가 함께 나오니 /를 빼주는 작업을 한다. (1부터 끝까지 얻는다)
+
 
 //            2. 처리
             MessageGenerator messageGenerator = new MessageGenerator(name);
@@ -84,7 +90,7 @@ public class MakaoBank {
 //            인사말 만들
             String content = messageGenerator.text(); //messageGenerator 에서 텍스트를 얻는다.
 
-//            3. 출
+//            3. 출력
 //            내용을 전달
             MessageWriter messageWriter = new MessageWriter(exchange);
             messageWriter.write(content);
@@ -93,16 +99,9 @@ public class MakaoBank {
 
     }
 
-    private static String nameFromPath(HttpExchange exchange) {
-        URI requestURI = exchange.getRequestURI();//변수를 만들고 URI의 paht를 얻어온다.
-        String path = requestURI.getPath();
-
-
-//             path 를 name 으로 잡으면 안될까?
-
-
-        String name = path.substring(1); //  '/'가 함께 나오니 /를 빼주는 작업을 한다. (1부터 끝까지 얻는다)
-        return name;
-    }
 }
-//주소가 다를 때 반복?
+// 입력 처리 출력 부분 분리한다.
+// 처리 부분이 좀 더 복잡한 부분이 들어갔으니 좀 더 중요하다. -> 테스트 코드 작성
+// 테스트 코드 작성한 부분에 대해 구현
+// 로직이 크게 크게 바뀌는 부분이 있을 때는 테스트 코드로 확인
+//
