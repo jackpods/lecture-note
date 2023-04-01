@@ -11,7 +11,8 @@
         ->ex) ahastudio.com -> 패키지 이름으로는 com.ahastudiio.makao.bank
 
     4.URL -> URI 과거불림/요즘불림
-      http://localhost:8080/home  ->http
+      http://localhost:8080/home  => http :// localhost : 8080 / home =>/부터 경로는 시작한다.
+
       프로토콜(protocol) + 호스트(host) + 포트(port) +경로(path)
      =>  http/https => local은 http를 사용 보안은 https를 사용,
 
@@ -39,6 +40,17 @@ public class MakaoBank {
 
     private void run() {
 //         2. 기본으로 제공해주는 것이 있다.
-        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8000),0);//(port)
+        InetSocketAddress address = new InetSocketAddress(8000);
+
+        HttpServer httpServer = HttpServer.create(address,0);//(port)
+        // 서버를 만들려고 할 때 포트를 중복으로 사용할 수가 없다. 어떤 경우에는 서버를 띄울 수가 없다.
+        // 그렇기에 실패하면 실패한다고 예외가 발생한다.
+
+        httpServer.createContext("/", (exchange) ->{
+            System.out.println("Hello, world!"); //사용자는 알 수 없고 볼 수 지만 서버에서는 반응이 있다.
+        }); // 어떤 경로로 접근했을 때 어떤 식으로 우리가 응답을 해줄 수 있는지.
+                                        // 뭐가 됐던간에 /로 시작하기만 하면 모조리 다 실행한다.
+
+        httpServer.start();
     }
 }
