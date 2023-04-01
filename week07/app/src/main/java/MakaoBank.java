@@ -42,6 +42,11 @@
     10.MessageGenerator -> 적절한 인사말 만들기
         -> 처리 완료 ! generator를 바꿔주기만 하면 여기쪽을 손대지 않고도 인사말들을 얼마든지 변경이 가능하다
     11.MessageWriter -> 메시지를 HTTP로 전달
+        -> 처리 완료
+
+    12.요청 URI를 얻어온다 -> 그 중 Path를 얻는다. => 이름 추출
+
+    13.3단계 구성 : 입력 처리 출
  */
 
 import com.sun.net.httpserver.HttpContext;
@@ -54,6 +59,7 @@ import utils.MessageWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.URI;
 import java.util.concurrent.Executor;
 
 public class MakaoBank {
@@ -67,29 +73,31 @@ public class MakaoBank {
 
         HttpServer httpServer = HttpServer.create(address, 0);
 
-
         httpServer.createContext("/", (exchange) -> {
-            MessageGenerator messageGenerator = new  MessageGenerator();
+//            1. 입력
+
+            URI requestURI = exchange.getRequestURI();//변수를 만들고 URI의 paht를 얻어온다.
+            String path = requestURI.getPath();
+            System.out.println(path);
+
+//             path 를 name 으로 잡으면 안될까?
+
+
+            String name = path.substring(1); //  '/'가 함께 나오니 /를 빼주는 작업을 한다. (1부터 끝까지 얻는다)
+
+//            2. 처리
+            MessageGenerator messageGenerator = new MessageGenerator(name);
 
 //            인사말 만들
             String content = messageGenerator.text(); //messageGenerator 에서 텍스트를 얻는다.
 
+//            3. 출
 //            내용을 전달
             MessageWriter messageWriter = new MessageWriter(exchange);
             messageWriter.write(content);
 
         });
 
-        httpServer.createContext("/ashal", (exchange) -> {
-            MessageGenerator messageGenerator = new MessageGenerator("Asahal");
-
-            String content = messageGenerator.text();
-
-            MessageWriter messageWriter = new MessageWriter(exchange);//exchange 근본적으로 바뀌는 내용이 아닌거 같다. 그렇기 때문에 기본으로 받는게 좋겠다.TODO-질문
-            messageWriter.write(content);
-
-        });
-
-        httpServer.start();
     }
 }
+//주소가 다를 때 반복?

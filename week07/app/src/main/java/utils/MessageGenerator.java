@@ -8,6 +8,10 @@ public class MessageGenerator {
     }
 
     public MessageGenerator(String name) {
+        if(name.isBlank()){ // name.strip().length == 0, name.equals("")
+            this.name ="world";
+            return;
+        }
         this.name = name;
     }
 
