@@ -24,6 +24,7 @@
 import com.sun.net.httpserver.HttpServer;
 import models.Account;
 import utils.AccountPageGenerator;
+import utils.GreetingPageGenerator;
 import utils.PageGenerator;
 import utils.MessageWriter;
 
@@ -48,13 +49,12 @@ public class MakaoBank {
             String path = requestURI.getPath();
 
 //          2. 처리
+            PageGenerator pageGenerator = new GreetingPageGenerator();
 
-            if (!path.equals("/account")) {
-                //TODO.뭔가 문제가 있음.  -> path 받은걸 처리
+            if (path.equals("/account")) {
+                Account account = new Account("1234", "Ashal", 3000);
+                pageGenerator = new AccountPageGenerator(account);
             }
-
-            Account account = new Account("1234", "Ashal", 3000);
-            PageGenerator pageGenerator = new AccountPageGenerator(account);
 
             String content = pageGenerator.html();
 
