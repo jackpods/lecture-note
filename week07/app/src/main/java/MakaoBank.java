@@ -22,16 +22,16 @@
         -> 구상/구체를 따로 만들어서 사용.
 
 송금
-    1.
+    1.TransferPageGenerator -> HTML =>송금 UI
+    2.송금 처리 -> POST
+    3.송금 결과
 */
 
 import com.sun.net.httpserver.HttpServer;
 import models.Account;
-import utils.AccountPageGenerator;
-import utils.GreetingPageGenerator;
-import utils.PageGenerator;
-import utils.MessageWriter;
+import utils.*;
 
+import javax.swing.text.Style;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
@@ -53,14 +53,14 @@ public class MakaoBank {
             String path = requestURI.getPath();
 
 //          2. 처리
-//           처리하는 곳에서 어카운트라는 이름으로 들어왔을 때는 어카운트에 대한 페이지를 만들어서  html을 얻었고
-//           아닐 때는 이름을 얻음
-            PageGenerator pageGenerator = new GreetingPageGenerator();
 
-            if (path.equals("/account")) {
-                Account account = new Account("1234", "Ashal", 3000);
-                pageGenerator = new AccountPageGenerator(account);
-            }
+            Account account = new Account("1234", "Ashal", 3000);
+
+            PageGenerator pageGenerator = switch (path) {
+                case "/account" -> new AccountPageGenerator(account);
+                case "/transfer" -> new TransferPageGenerator(account);
+                default -> new GreetingPageGenerator();
+            };
 
             String content = pageGenerator.html();
 
@@ -68,8 +68,12 @@ public class MakaoBank {
 
             MessageWriter messageWriter = new MessageWriter(exchange);
             messageWriter.write(content);
-
         });
+
+        httpServer.start();
+
+        System.out.println("Sever is listening... http://localhost:8000/");
+        System.out.println("Sever is listening... http://localhost:8000/account");
     }
 }
 // /account 일 때만 계좌 정보가 보이게 되야한다.
