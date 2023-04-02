@@ -9,16 +9,20 @@
     3. 거래 내역 확인(/transactions)
        -> Transaction (거래) -> 관리 => List
 
-
+잔액 조회
     1. Account 모델 만들기
 
     2. 세 가지 상황이 있기에 Generator 를 각 각 따로 만들어준다.
        더 이상 메세지가 아닌 특정 페이지로 만들어주는거다.
-       PageGenerator 를 PageGenerator 로 이름 바꾸기
+       MessageGenerator 를 PageGenerator 로 이름 바꾸기
         -> PageGenerator 를 추상적인 존재로 변경  -> 타입으로만 잡을거다.
+            -> abstract class => abstract method => @Override
         -> HTML 을 돌려주게 한다.
     3. PageGenerator 를 상속해 AccountPageGenerator 만들기
         -> 구상/구체를 따로 만들어서 사용.
+
+송금
+    1.
 */
 
 import com.sun.net.httpserver.HttpServer;
@@ -49,6 +53,8 @@ public class MakaoBank {
             String path = requestURI.getPath();
 
 //          2. 처리
+//           처리하는 곳에서 어카운트라는 이름으로 들어왔을 때는 어카운트에 대한 페이지를 만들어서  html을 얻었고
+//           아닐 때는 이름을 얻음
             PageGenerator pageGenerator = new GreetingPageGenerator();
 
             if (path.equals("/account")) {
