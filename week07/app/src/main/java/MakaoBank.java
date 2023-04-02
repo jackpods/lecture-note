@@ -14,13 +14,13 @@
 
     2. 세 가지 상황이 있기에 Generator 를 각 각 따로 만들어준다.
        더 이상 메세지가 아닌 특정 페이지로 만들어주는거다.
-       MessageGenerator 를 PageGenerator 로 이름 바꾸기
+       PageGenerator 를 PageGenerator 로 이름 바꾸기
 
     3. PageGenerator 를 상속해 AccountPageGenerator 만들기
 */
 
 import com.sun.net.httpserver.HttpServer;
-import utils.MessageGenerator;
+import utils.PageGenerator;
 import utils.MessageWriter;
 
 import java.io.IOException;
@@ -49,8 +49,8 @@ public class MakaoBank {
 
 //          2. 처리
 
-            MessageGenerator messageGenerator = new MessageGenerator();
-            String content = messageGenerator.text();
+            PageGenerator pageGenerator = new PageGenerator();
+            String content = pageGenerator.text();
 
 //          3. 출력
 
