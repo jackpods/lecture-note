@@ -15,11 +15,15 @@
     2. 세 가지 상황이 있기에 Generator 를 각 각 따로 만들어준다.
        더 이상 메세지가 아닌 특정 페이지로 만들어주는거다.
        PageGenerator 를 PageGenerator 로 이름 바꾸기
-
+        -> PageGenerator 를 추상적인 존재로 변경  -> 타입으로만 잡을거다.
+        -> HTML 을 돌려주게 한다.
     3. PageGenerator 를 상속해 AccountPageGenerator 만들기
+        -> 구상/구체를 따로 만들어서 사용.
 */
 
 import com.sun.net.httpserver.HttpServer;
+import models.Account;
+import utils.AccountPageGenerator;
 import utils.PageGenerator;
 import utils.MessageWriter;
 
@@ -43,14 +47,16 @@ public class MakaoBank {
             URI requestURI = exchange.getRequestURI();
             String path = requestURI.getPath();
 
+//          2. 처리
+
             if (!path.equals("/account")) {
                 //TODO.뭔가 문제가 있음.  -> path 받은걸 처리
             }
 
-//          2. 처리
+            Account account = new Account("1234", "Ashal", 3000);
+            PageGenerator pageGenerator = new AccountPageGenerator(account);
 
-            PageGenerator pageGenerator = new PageGenerator();
-            String content = pageGenerator.text();
+            String content = pageGenerator.html();
 
 //          3. 출력
 
@@ -60,3 +66,4 @@ public class MakaoBank {
         });
     }
 }
+// /account 일 때만 계좌 정보가 보이게 되야한다.
