@@ -16,7 +16,7 @@ public class AccountPageGenerator extends PageGenerator {
         return "<!DOCTYPE html>\n" +
                "<html>\n" +
                "<head>\n" +
-               "<meat charset=\"UTF-8\"\n" +
+               "<meta charset=\"UTF-8\"\n" +
                "<title>MakaoBank</title>\n" +
                "</head>\n" +
                "<body>\n" +

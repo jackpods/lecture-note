@@ -62,7 +62,9 @@ public class MakaoBank {
             MessageWriter messageWriter = new MessageWriter(exchange);
             messageWriter.write(content);
 
+            System.out.println("주소"+httpServer.getAddress());
         });
+        httpServer.start();
     }
 }
 //PageGenerator TDD 로 알 수 있는게 없다. 그저 타입이기 때문에 -> 그렇기에 TDD 명을 변경해준다.
