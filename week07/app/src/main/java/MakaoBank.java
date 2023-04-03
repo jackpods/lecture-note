@@ -51,7 +51,7 @@ public class MakaoBank {
             PageGenerator pageGenerator = new GreetingPageGenerator(); // 기본을 인사로 설정
 
             if (path.equals("/account")) {
-                Account account = new Account("1234", "jack", 3000);
+                Account account = new Account("1234", "asahal", 3000);
                 pageGenerator = new AccountPageGenerator(account);//PageGenerator 추상적인 존재로 변경 => 타입으로만 잡는다.
             }
 
@@ -62,9 +62,9 @@ public class MakaoBank {
             MessageWriter messageWriter = new MessageWriter(exchange);
             messageWriter.write(content);
 
-            System.out.println("주소"+httpServer.getAddress());
         });
         httpServer.start();
+        System.out.println("http://localhost:8000/");
     }
 }
 //PageGenerator TDD 로 알 수 있는게 없다. 그저 타입이기 때문에 -> 그렇기에 TDD 명을 변경해준다.
