@@ -1,84 +1,97 @@
-/*
- 마카오 뱅크의 기능
- 1. 잔액 조회(/account)
-    -> Account (계좌) -> 계좌 번호 필요함.
- 2. 송금(/transfer)
-    -> 여러 계좌 -> 어떻게 구분? => 계좌 번호
-               -> 어떻게 관리? => Map
-    -> Transaction 추가.
- 3. 거래 내역 확인(transactions)
-    -> Transaction (거래) -> 관리 => List
-
-    송금처리
- 1. TransferPageGenerator 를 만들어서 HTML 을 보여준다. => 송금 UI를 보여준다. => 반응이 있게 하려면 form을 사용해야한다. <form>만들기
- 2. 송금 처리 => POST를 이용해서 처리 => form을 만들어서 POST로 처리.그럴려면 주소가 필요하다.
-    1) /transfer => 같은 주소 활용 =? method 를 확인해야한다.
-    2) /transfer-process => 앞에와 같이 다른 주소 사
- 3. 송금 결과 보여줘야한다.
- 4. Template method pattern 활 -> 일부만 바꿔서 쓸 때
- 5. GET 과 POST 처리 나눔.
-    -> 삼항연산자 활용 => 조건 ? true 일 때 : false 일 때
-    -> 처리하는 부분과 결과 보여주는 부분도 나눔.
- */
-
 import com.sun.net.httpserver.HttpServer;
 import models.Account;
+import repositories.AccountRepository;
+import services.TransferService;
 import utils.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.util.Map;
 
 public class MakaoBank {
+    private final FormParser formParser;
+    private final String accountIdentifier = "1234";
+    private final TransferService transferService;
+    private final AccountRepository accountRepository;
+
     public static void main(String[] args) throws IOException {
         MakaoBank application = new MakaoBank();
         application.run();
     }
 
-    private void run() throws IOException {
-        InetSocketAddress address = new InetSocketAddress(8000);
+    public MakaoBank() {
+        formParser = new FormParser();
+        accountRepository = new AccountRepository();
+        transferService = new TransferService(accountRepository);
+    }
 
-        HttpServer httpServer = HttpServer.create(address, 0);
+    public void run() throws IOException {
+        InetSocketAddress addres = new InetSocketAddress(8000);
+        HttpServer httpServer = HttpServer.create(addres, 0);
 
         httpServer.createContext("/", (exchange) -> {
-//            1. 입력
-
+            // 입력
             URI requestURI = exchange.getRequestURI();
             String path = requestURI.getPath();
 
-            String method = exchange.getRequestMethod(); //http에서 쓰는 메소드
+            String method = exchange.getRequestMethod();
 
-//            2. 처리
+            String requestBody = new RequestBodyReader(exchange).body();
 
-            Account account = new Account("1234", "Asahal", 3000);
+            // 처리
+            Map<String, String> formData = formParser.parse(requestBody);
 
-                //진짜 처리?
-
-                PageGenerator pageGenerator = switch (path) {
-                    case "/account" -> new AccountPageGenerator(account);
-                    case "/transfer" -> method.equals("GET")
-                            ? new TransferPageGenerator(account)
-                            : new TransferProcessPageGenerator(account);
-                    default -> new GreetingPageGenerator();
-                };
-
-                //진짜 처리?
-
-                String content = pageGenerator.html();
-
-//            3. 출력
-
-            MessageWriter messageWriter = new MessageWriter(exchange);
-            messageWriter.write(content);
-
+            PageGenerator pageGenerator = process(path, method, formData);
+            // 출력
+            new MessageWriter(exchange).write(pageGenerator.html());
         });
+
         httpServer.start();
-
-        System.out.println("Server is listening... http://localhost:8000/");
+        System.out.print("http://localhost:8000");
     }
-}
-//인텔리제이아이디어가 화면에 뭔가 출력해주거나 출력하는게 없으면 프로그램이 실행됐다는걸 인지 못한다.
-//그렇기에 System.out.println 을 해준다.
-//그럼 거의 바로 나온다.
 
-//처리 부분이 전부 GET에 관한 것이기에 POST에 관한 것을 넣어주자.
+    private PageGenerator process(String path, String method,
+                                  Map<String, String> formData) {
+        String[] steps = path.substring(1).split("/");
+        return switch (steps[0]) {
+            case "account" -> processAccount(steps.length > 1 ? steps[1] : "");
+            case "transfer" -> processTransfer(method, formData);
+//            case "transactions" -> processTransactions();
+            default -> new GreetingPageGenerator();
+        };
+    }
+
+    private PageGenerator processTransfer(String method,
+                                          Map<String, String> formData) {
+        if (method.equals("GET")) {
+            return processTransferGet();
+        }
+        return processTransferPost(formData);
+    }
+
+    private AccountPageGenerator processAccount(String identifier) {
+        Account account = accountRepository.find(identifier, accountIdentifier);
+        return new AccountPageGenerator(account);
+    }
+
+    private TransferPageGenerator processTransferGet() {
+        Account account = accountRepository.find(accountIdentifier);
+        return new TransferPageGenerator(account);
+    }
+
+    private TransferSuccessPageGenerator processTransferPost(Map<String, String> formData) {
+        transferService.transfer(
+                accountIdentifier,
+                formData.get("to"),
+                (int) Long.parseLong(formData.get("amount")));
+
+        Account account = accountRepository.find(accountIdentifier);
+        return new TransferSuccessPageGenerator(account);
+    }
+
+//    private PageGenerator processTransactions() {
+//        Account account = accountRepository.find(accountIdentifier);
+//        return new TransactionsPageGenerator(account);
+//    }
+}
