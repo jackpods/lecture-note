@@ -9,15 +9,15 @@
  3. 거래 내역 확인(transactions)
     -> Transaction (거래) -> 관리 => List
 
-
+    송금처리
+ 1. TransferPageGenerator 를 만들어서 HTML 을 보여준다. => 송금 UI를 보여준다.
+ 2. 송금 처리 => POST를 이용해서 처리
+ 3. 송금 결과 보여줘야한다.
  */
 
 import com.sun.net.httpserver.HttpServer;
 import models.Account;
-import utils.AccountPageGenerator;
-import utils.GreetingPageGenerator;
-import utils.PageGenerator;
-import utils.MessageWriter;
+import utils.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -42,12 +42,14 @@ public class MakaoBank {
 //          account를 받았을 때 어떻게 하다가 필요
 
 //            2. 처리
-            PageGenerator pageGenerator = new GreetingPageGenerator();
 
-            if (path.equals("/account")) {
-                Account account = new Account("1234", "asahal", 3000);
-                pageGenerator = new AccountPageGenerator(account);
-            }
+            Account account = new Account("1234", "asahal", 3000);
+
+            PageGenerator pageGenerator = switch (path) {
+                case "/account" -> new AccountPageGenerator(account);
+                case "transfer" -> new TransferPageGenerator(account);
+                default -> new GreetingPageGenerator();
+            };
 
             String content = pageGenerator.html();
 
