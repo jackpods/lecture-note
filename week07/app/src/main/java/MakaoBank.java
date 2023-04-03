@@ -13,6 +13,7 @@
  1. TransferPageGenerator 를 만들어서 HTML 을 보여준다. => 송금 UI를 보여준다.
  2. 송금 처리 => POST를 이용해서 처리
  3. 송금 결과 보여줘야한다.
+ 4. Template method pattern 활 -> 일부만 바꿔서 쓸 때
  */
 
 import com.sun.net.httpserver.HttpServer;
@@ -42,11 +43,11 @@ public class MakaoBank {
 
 //            2. 처리
 
-            Account account = new Account("1234", "asahal", 3000);
+            Account account = new Account("1234", "Asahal", 3000);
 
             PageGenerator pageGenerator = switch (path) {
                 case "/account" -> new AccountPageGenerator(account);
-                case "transfer" -> new TransferPageGenerator(account);
+                case "/transfer" -> new TransferPageGenerator(account);
                 default -> new GreetingPageGenerator();
             };
 
