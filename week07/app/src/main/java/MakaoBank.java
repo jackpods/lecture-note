@@ -39,7 +39,6 @@ public class MakaoBank {
 
             URI requestURI = exchange.getRequestURI();
             String path = requestURI.getPath();
-//          account를 받았을 때 어떻게 하다가 필요
 
 //            2. 처리
 
@@ -60,6 +59,10 @@ public class MakaoBank {
 
         });
         httpServer.start();
-        System.out.println("http://localhost:8000/");
+
+        System.out.println("Server is listening... http://localhost:8000/");
     }
 }
+//인텔리제이아이디어가 화면에 뭔가 출력해주거나 출력하는게 없으면 프로그램이 실행됐다는걸 인지 못한다.
+//그렇기에 System.out.println 을 해준다.
+//그럼 거의 바로 나온다.
