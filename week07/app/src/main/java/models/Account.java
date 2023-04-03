@@ -8,7 +8,7 @@ public class Account {
     private String name;
     private long amount;
 
-//    private List<Transaction> transactions = new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
     public Account(String identifier, String name, long amount) {
         this.identifier = identifier;
         this.name = name;
@@ -32,18 +32,18 @@ public class Account {
 
         receiver.amount += amount;
 
-//        Transaction transaction = new Transaction(this, receiver, amount);
-//        transactions.add(transaction);
-//        receiver.transactions.add(transaction);
+        Transaction transaction = new Transaction(this, receiver, amount);
+        transactions.add(transaction);
+        receiver.transactions.add(transaction);
     }
 
-//    public int transactionsCount() {
-//        return transactions.size();
-//    }
+    public int transactionsCount() {
+        return transactions.size();
+    }
 
-//    public List<Transaction> transactions() {
-//        return new ArrayList<>(transactions);
-//    }
+    public List<Transaction> transactions() {
+        return new ArrayList<>(transactions);
+    }
 
     @Override
     public boolean equals(Object other) {
