@@ -1,63 +1,97 @@
-/*
- 마카오 뱅크의 기능
- 1. 잔액 조회(/account)
-    -> Account (계좌) -> 계좌 번호 필요함.
- 2. 송금(/transfer)
-    -> 여러 계좌 -> 어떻게 구분? => 계좌 번호
-               -> 어떻게 관리? => Map
-    -> Transaction 추가.
- 3. 거래 내역 확인(transactions)
-    -> Transaction (거래) -> 관리 => List
-
-
- */
-
 import com.sun.net.httpserver.HttpServer;
 import models.Account;
-import utils.AccountPageGenerator;
-import utils.GreetingPageGenerator;
-import utils.PageGenerator;
-import utils.MessageWriter;
+import repositories.AccountRepository;
+import services.TransferService;
+import utils.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.util.Map;
 
 public class MakaoBank {
+    private final FormParser formParser;
+    private final String accountIdentifier = "1234";
+    private final TransferService transferService;
+    private final AccountRepository accountRepository;
+
     public static void main(String[] args) throws IOException {
         MakaoBank application = new MakaoBank();
         application.run();
     }
 
-    private void run() throws IOException {
-        InetSocketAddress address = new InetSocketAddress(8000);
+    public MakaoBank() {
+        formParser = new FormParser();
+        accountRepository = new AccountRepository();
+        transferService = new TransferService(accountRepository);
+    }
 
-        HttpServer httpServer = HttpServer.create(address, 0);
+    public void run() throws IOException {
+        InetSocketAddress addres = new InetSocketAddress(8000);
+        HttpServer httpServer = HttpServer.create(addres, 0);
 
         httpServer.createContext("/", (exchange) -> {
-//            1. 입력
-
+            // 입력
             URI requestURI = exchange.getRequestURI();
             String path = requestURI.getPath();
-//          account를 받았을 때 어떻게 하다가 필요
 
-//            2. 처리
-            PageGenerator pageGenerator = new GreetingPageGenerator();
+            String method = exchange.getRequestMethod();
 
-            if (path.equals("/account")) {
-                Account account = new Account("1234", "asahal", 3000);
-                pageGenerator = new AccountPageGenerator(account);
-            }
+            String requestBody = new RequestBodyReader(exchange).body();
 
-            String content = pageGenerator.html();
+            // 처리
+            Map<String, String> formData = formParser.parse(requestBody);
 
-//            3. 출력
-
-            MessageWriter messageWriter = new MessageWriter(exchange);
-            messageWriter.write(content);
-
+            PageGenerator pageGenerator = process(path, method, formData);
+            // 출력
+            new MessageWriter(exchange).write(pageGenerator.html());
         });
+
         httpServer.start();
-        System.out.println("http://localhost:8000/");
+        System.out.print("http://localhost:8000");
     }
+
+    private PageGenerator process(String path, String method,
+                                  Map<String, String> formData) {
+        String[] steps = path.substring(1).split("/");
+        return switch (steps[0]) {
+            case "account" -> processAccount(steps.length > 1 ? steps[1] : "");
+            case "transfer" -> processTransfer(method, formData);
+//            case "transactions" -> processTransactions();
+            default -> new GreetingPageGenerator();
+        };
+    }
+
+    private PageGenerator processTransfer(String method,
+                                          Map<String, String> formData) {
+        if (method.equals("GET")) {
+            return processTransferGet();
+        }
+        return processTransferPost(formData);
+    }
+
+    private AccountPageGenerator processAccount(String identifier) {
+        Account account = accountRepository.find(identifier, accountIdentifier);
+        return new AccountPageGenerator(account);
+    }
+
+    private TransferPageGenerator processTransferGet() {
+        Account account = accountRepository.find(accountIdentifier);
+        return new TransferPageGenerator(account);
+    }
+
+    private TransferSuccessPageGenerator processTransferPost(Map<String, String> formData) {
+        transferService.transfer(
+                accountIdentifier,
+                formData.get("to"),
+                (int) Long.parseLong(formData.get("amount")));
+
+        Account account = accountRepository.find(accountIdentifier);
+        return new TransferSuccessPageGenerator(account);
+    }
+
+//    private PageGenerator processTransactions() {
+//        Account account = accountRepository.find(accountIdentifier);
+//        return new TransactionsPageGenerator(account);
+//    }
 }
